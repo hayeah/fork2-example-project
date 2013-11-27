@@ -1,0 +1,116 @@
+# Creating and Using Regexps
+
+{{#code}}
+$:.unshift File.expand_path('..', __FILE__)
+require "tasks/release"
+require 'railties/lib/rails/api/task'
+
+desc "Build gem files for all projects"
+task :build => "all:build"
+
+desc "Release all gems to rubygems and create a tag"
+task :release => "all:release"
+
+PROJECTS = %w(activesupport activemodel actionpack actionview actionmailer activerecord railties)
+
+desc 'Run all tests by default'
+task :default => %w(test test:isolated)
+
+00000000000000000000000000000000000000000000000000000000000000000000000000000000
+11111111111111111111111111111111111111111111111111111111111111111111111111111111
+22222222222222222222222222222222222222222222222222222222222222222222222222222222
+33333333333333333333333333333333333333333333333333333333333333333333333333333333
+44444444444444444444444444444444444444444444444444444444444444444444444444444444
+55555555555555555555555555555555555555555555555555555555555555555555555555555555
+66666666666666666666666666666666666666666666666666666666666666666666666666666666
+77777777777777777777777777777777777777777777777777777777777777777777777777777777
+88888888888888888888888888888888888888888888888888888888888888888888888888888888
+99999999999999999999999999999999999999999999999999999999999999999999999999999999
+{{/code}}
+
+{{#md}}
++ item 1
++ item 2
+{{/md}}
+
+{{code "hello.rb"}}
+
+```ruby
+regexp = Regexp.new("ant")
+match = regexp.match("pants")
+```
+
+You're reading this because you want to use regular expressions when you code.
+So this is probably a good time to tell you how to represent and use regular
+expressions in your programs.
+
+The good news is that most languages make it easy to use regular expressions.
+The bad news is that each language does it differently.
+
+There is however a lot in common across all languages. They all have you
+create something representing a regular expression. (In object-oriented
+languages, this will be an instance of some kind of `Regular Expression`
+class.) You can then call methods to that object to apply it to a string. You
+may also, depending on the language, be able to do the opposite and ask a
+string object whether it is matched by a regexp.
+
+To see how to represent and use regexps in some common languages, push the
+corresponding magnifying glass icon in the list that follows.
+
++ Ruby (using explicit classes and methods)
++ Ruby (using shortcut syntax)
++ Python
++ Java
++ Javascript
+
+Ruby regular expressions are objects of type `Regexp`. These objects support a
+rich set of methods. The basic one is `match`, which applies the pattern to a
+string and returns either an object describing the match (of type `MatchData`)
+or `nil` if there is no match.
+
+{{#code lang="ruby"}}
+regexp = Regexp.new("ant")
+match = regexp.match("pants")
+{{/code}}
+
+
+Ruby also supports regular expressions directly in the language's syntax.
+`/pattern/` is a regular expression literal. It creates a `Regexp` object
+(just as `"string"` literals create `String` objects). The `=~` operator
+matches a string and a regexp, returning the offset of the match if there is
+one, or `nil` otherwise.
+
+{{#code lang="ruby"}}
+regexp = Regexp.new("ant")
+match = regexp.match("pants")
+{{/code}}
+
+
+Regular expressions in Python are implemented in the `re` package. You pass
+the pattern as a string to functions like `re.compile()` and `re.search()`. As
+we'll see later in this course, patterns often include characters such as
+backslash (`\`) which have special meaning in string literals. In Python, you
+turn off this special meaning by prefixing the literal with a lowercase `r`
+(making it a *raw* string). So, in the following examples, `r'ant'` is
+simply the string `a`-`n`-`t`. The `re` package converts this string into a
+meaningful regexp.
+
+{{#code lang="python"}}
+import re
+
+# create a regexp from a pattern, and then
+# match that pattern against a string
+regexp = re.compile(r'ant')
+print regexp.search("pants")   # => Match object
+
+# or use the shortcut form...
+print re.search(r'ant', "pants")
+regexp = Regexp.new("ant")
+match = regexp.match("pants")
+{{/code}}
+
+<section>
+## Some Real World Examples
+
+Remember that we said that a regular expression is a pattern, and we represent that pattern using the characters available on our keyboard. So let's see how that works in practice.
+</section>
