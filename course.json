@@ -1,0 +1,7 @@
+{
+  "name": "regex",
+  "content": [
+    "intro.hbs",
+    "representing-regexp.hbs"
+  ]
+}

@@ -1,0 +1,38 @@
+#  What is a Regexp?
+
+A regular expression (or *regexp*, or *regex*), is a pattern
+that can be matched against a string. In other words, the regular expression
+pattern specifies what we're looking for, and we can apply that pattern to one
+or more strings to see if they contain that pattern.
+
+For example, we could create a regexp that matches any string that contains
+either "cat" or "dog". We could then apply that regexp to various strings. If
+we applied it to the string `"My cat"`, it would match (and we could
+probably find out that it matched at the 3rd character in the string, where
+characters are numbered starting at 0. {{footnote 1}}
+
+{{#footnote-for 1}}
+```ruby
+"My cat"  # string to match
+cat       # pattern
+012345    # character offset
+```
+{{/footnote-for}}
+
+We could apply the same regexp to the string `"catastrophic"` and get a
+match at position zero (because we didn't construct our regexp to look only
+for complete words when matching). {{footnote 2}}
+
+{{#footnote-for 2}}
+```ruby
+"catastrophe"  # string to match
+cat            # pattern
+012345         # character offset
+```
+{{/footnote-for}}
+
+But apply it to `"c.a.t."` or `"Doggy"` and the match will fail.
+In the first case, the letters are there, but our pattern wanted them to be
+consecutive. In the second case, the string contains an uppercase D and our
+pattern looked for a lower case one. (We'll see later how to make pattern
+matches ignore the case of letters.)
