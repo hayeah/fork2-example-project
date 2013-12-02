@@ -1,17 +1,5 @@
 # Creating and Using Regexps
 
-{{#md}}
-+ item 1
-+ item 2
-{{/md}}
-
-{{code "hello.rb"}}
-
-```ruby
-regexp = Regexp.new("ant")
-match = regexp.match("pants")
-```
-
 You're reading this because you want to use regular expressions when you code.
 So this is probably a good time to tell you how to represent and use regular
 expressions in your programs.
@@ -29,12 +17,13 @@ string object whether it is matched by a regexp.
 To see how to represent and use regexps in some common languages, push the
 corresponding magnifying glass icon in the list that follows.
 
-+ Ruby (using explicit classes and methods)
-+ Ruby (using shortcut syntax)
-+ Python
++ Ruby (using explicit classes and methods) {{footnote 1}}
++ Ruby (using shortcut syntax) {{footnote 2}}
++ Python {{footnote 3}}
 + Java
 + Javascript
 
+{{#footnote 1}}
 Ruby regular expressions are objects of type `Regexp`. These objects support a
 rich set of methods. The basic one is `match`, which applies the pattern to a
 string and returns either an object describing the match (of type `MatchData`)
@@ -44,8 +33,9 @@ or `nil` if there is no match.
 regexp = Regexp.new("ant")
 match = regexp.match("pants")
 {{/code}}
+{{/footnote}}
 
-
+{{#footnote 2}}
 Ruby also supports regular expressions directly in the language's syntax.
 `/pattern/` is a regular expression literal. It creates a `Regexp` object
 (just as `"string"` literals create `String` objects). The `=~` operator
@@ -56,8 +46,9 @@ one, or `nil` otherwise.
 regexp = Regexp.new("ant")
 match = regexp.match("pants")
 {{/code}}
+{{/footnote}}
 
-
+{{#footnote 3}}
 Regular expressions in Python are implemented in the `re` package. You pass
 the pattern as a string to functions like `re.compile()` and `re.search()`. As
 we'll see later in this course, patterns often include characters such as
@@ -80,7 +71,48 @@ print re.search(r'ant', "pants")
 regexp = Regexp.new("ant")
 match = regexp.match("pants")
 {{/code}}
+{{/footnote}}
 
 ## Some Real World Examples
 
-Remember that we said that a regular expression is a pattern, and we represent that pattern using the characters available on our keyboard. So let's see how that works in practice.
+Remember that we said that a regular expression is a pattern, and we represent
+that pattern using the characters available on our keyboard. So let's see how
+that works in practice.
+
+The most common way to create a regular expression in Ruby is using a regexp
+literal. At its simplest, a regexp literal is a pattern wrapped in two forward
+slash characters (`/`). So, the Ruby syntax for a regexp that matches the
+characters c, a, and t is `/cat/`. The canine equivalent would be `/dog/`.
+
+The normal way to match a regexp to a string is to use the `=~` operator. It
+takes a regexp on one side and a string on the other (which comes first is up
+to you). If the pattern matches the string, `=~` returns the character offset
+of the match in the string (starting at zero). If it doesn't match, `=~`
+returns `nil`.
+
+```ruby
+farm = "otters, cats, ocelots, dogs, and wildebeast"
+
+p /cat/ =~ farm      # => 8
+
+p /dog/ =~ farm      # => 23
+p farm =~ /dog/      # => 23
+
+p /monkey/ =~ farm   # => nil
+```
+
+These return values are convenient, because a `nil` is equivalent to `false`
+when used in a boolean context, and any integer offset returned if the pattern
+matches is equivalent to `true`.
+
+```ruby
+farm = "otters, cats, ocelots, dogs, and wildebeast"
+
+if farm =~ /wild/
+puts "There's something wild in the farm"
+end
+
+if farm =~ /elephant/
+puts "Better get lots of food"
+end
+```
