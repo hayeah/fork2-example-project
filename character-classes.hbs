@@ -1,0 +1,192 @@
+# Character Classes
+
+So far, the patterns in our regexps have just been simple strings—the regexp
+matched a target if the target contained those characters as a substring. But
+that's pretty boring. Let's see if we can make things more interesting.
+
+Let's image we had been given the challenge of determining if a string
+contains the word “analyze.” We could do this with a simple pattern,
+`/analyze/`. {{footnote 1}} But then we're given some text written by
+someone from England, and we discover they've used the spelling “analyse.” We
+also need to match this.
+
+{{#footnote 1}}
+To make life simple, we'll show regular expression literals using the syntax
+`/pattern/`. In Java and Python, you'd use a string to hold the pattern, and
+use special methods to convert this string into a regexp.
+{{/footnote}}
+
+Now, we could simply perform two matches:
+
+```
+if text matches /analyze/ or text matches /analyse/
+```
+
+But patterns allow us to do this more elegantly.
+
+Inside a pattern, the sequence `[characters]` means
+*match one (and only one) of the characters between the square brackets at
+this point.* Applying this to our problem, we could write the pattern:
+
+```ruby
+/analy[sz]e/
+```
+
+This pattern says, match a string that contains the characters `analy`,
+then either the character `s` or `y`, and then the character
+`e`. And that's exactly what we need to match those two words.
+
+Here are a few more examples:
+
+<dl>
+  <dt>`/question [0123456789]:/`</dt>
+  <dd>
+    <p>
+Matches the text `question `, a single digit, and a colon. (Note that we use
+the symbol &vspace; to represent a space character in descriptions. The
+pattern itself contains a regular space.)
+    </p>
+  </dd>
+
+  <dt>`/d[aeiou]g/`</dt>
+  <dd>
+    <p>
+Matches strings containing dag, deg, dig, dog, and dug.
+    </p>
+  </dd>
+
+  <dt>`/[012][0123456789]:[012345][0123456789]/`</dt>
+  <dd>
+    <p>
+Matches a representation of a time in the *hh:mm*
+format. Note that this isn't a precise pattern; for example,
+it will incorrectly match 29:00. However, fixing this requires
+a little bit more regexp magic, that we'll fix later.
+    </p>
+  </dd>
+</dl>
+
+We call the `[chars]` construct a *character class.*
+
+As we saw in the time pattern, there's nothing stopping you from having
+multiple character classes in a pattern. For example, the pattern
+`/[aeiou][aeiou]/` matches two consecutive vowels. But there's something
+tricky to be aware of— when your computer matches a pattern against a string,
+it tries to follow W.E.Hickson's timeless advice:
+
+```
+If at first you don't succeed,
+    Try, try again.
+```
+
+Let's pretend to be a computer matching the pattern `/[aeiou][aeiou]/` against
+the string `succeed`.
+
+It's first job is to match the first character class. It tries the "s", which
+fails. It then tries the "u", which succeeds. Now it is looking at the second
+character class in the pattern. It matches it against the next character, a
+"c", which fails. But does it give up? No, siree. It rolls itself back to the
+first character class, and tries to match it against the "c". It fails, so it
+moves on to the next "c", which also fails. Undeterred, it tries the next
+character, an "e". It succeeds, so it moves on to the next character class in
+the pattern, and it successfully matches the next "e". We've now matched our
+entire pattern, so the regex is successful.
+
+You'll hear people talk about this as "backtracking." When part of a pattern
+fails to match, the computer will go back the part that previously did match
+and try reapplying it at the current position. This is subtle nd powerful.
+It's also the source of many mistakes when writing patterns. We'll try to
+highlight when backtracking is important as we go along.
+
+## Matching Stuff Not in a Character Class
+
+Sometimes you need to invert the sense of a character class—you need a pattern
+that matches anything *but* the characters you specify. To do this, put an
+uparraw just inside the opening bracket. (Uparrow is also called a caret or a
+hat character, and looks like `^`).
+
+For example, you might want to verify that a string does not contain the
+letter Z or z. The pattern would be `/[^Zz]/`. To verify it contains no
+uppercase letters, you can use `/[^A-Z]/`.
+
+## Some Shortcuts
+
+It's a little tedious typing `[0123456789]` every time you need to match a
+single digit in a pattern. Fortunately, there are a number of shortcuts for
+character classes.
+
+Inside the character class brackets you can specify *ranges* of characters
+using the syntax *first–last*. So, you could rewrite the digit-matching
+pattern as `/[0-9]/`, and you could match a lower case ASCII letter using
+`/[a-z]/`. A character class can contain multiple ranges, so `/[a-z0-9]/`
+matches a lower case letter or a digit. (Pop quiz: what does `/[a-z][0-9]/`
+match? {{footnote 2}}
+
+{{#footnote 2}}
+It matches a lowercase letter followed by a digit—each character
+class is a separate component of the regexp.
+{{/footnote}}
+
+It turns out that people often use certain character classes over and over
+again, so there are shortcuts for these classes, too. They all start with a
+backslash character (`\`), and you can use them both inside and outside square
+brackets. Here are some useful ones:
+
+Pattern | Matches
+--- | ---
+`\d` | Any digit (same as `[0-9]`)
+`\w` | Any character that can appear in a conventional programming language identifier (the *w* stands for *word*). (same as `[0-9a-zA-Z_]`)
+`\s`| A whitespace character (space, tab, form feed, and so on).
+
+In addition, you can negate the sense of the pattern by making the character
+uppercase:
+
+Pattern | Matches
+--- | ---
+`\D` | Any nondigit (same as `[^0-9]`)
+`\W` | Any nondigit (same as `[^0-9]`)
+`\S` | A nonspace character.
+
+And, finally, there's the ultimate character class shortcut. A single period
+`.` means *match any single character*. It is like a character class
+containing all possible characters.
+
+<dl>
+  <dt>`/qu..k/`</dt>
+  <dd>
+    <p>
+Match a string containing qu, two arbitrary characters, and a
+k.
+    </p>
+  </dd>
+
+  <dt>`/q[^u]/`</dt>
+  <dd>
+    <p>
+Matches a letter q not immediately followed by a u.
+    </p>
+  </dd>
+
+  <dt>`/a.e.i.o/`</dt>
+  <dd>
+    <p>
+Match a string containing the first four vowels with an
+arbitrary character between each. When I run this on a file of
+English words, I get a surprisingly large number of matches,
+including words such as hypocrateriform and laterifolious.
+    </p>
+  </dd>
+
+
+  <dt>`/[01]\d:[0-5]\d\s[ap]m/`</dt>
+  <dd>
+    <p>
+Match a 12 hour time with an am/pm suffix. The match starts with
+either a zero or a one, followed by any digit. Between them,
+this matches the hour part of the time. We then have a colon,
+followed by the minutes (a digit from zero to five followed by
+any digit). We then look for a whitespace character, followed by
+either am or pm.
+    </p>
+  </dd>
+</dl>

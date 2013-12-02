@@ -2,6 +2,7 @@
   "name": "regex",
   "content": [
     "intro.hbs",
-    "representing-regexp.hbs"
+    "representing-regexp.hbs",
+    "character-classes.hbs"
   ]
 }
