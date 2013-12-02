@@ -11,25 +11,25 @@ we applied it to the string `"My cat"`, it would match (and we could
 probably find out that it matched at the 3rd character in the string, where
 characters are numbered starting at 0. {{footnote 1}}
 
-{{#footnote-for 1}}
+{{#footnote 1}}
 ```ruby
 "My cat"  # string to match
 cat       # pattern
 012345    # character offset
 ```
-{{/footnote-for}}
+{{/footnote}}
 
 We could apply the same regexp to the string `"catastrophic"` and get a
 match at position zero (because we didn't construct our regexp to look only
 for complete words when matching). {{footnote 2}}
 
-{{#footnote-for 2}}
+{{#footnote 2}}
 ```ruby
 "catastrophe"  # string to match
 cat            # pattern
 012345         # character offset
 ```
-{{/footnote-for}}
+{{/footnote}}
 
 But apply it to `"c.a.t."` or `"Doggy"` and the match will fail.
 In the first case, the letters are there, but our pattern wanted them to be
