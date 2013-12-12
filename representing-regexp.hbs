@@ -116,3 +116,61 @@ if farm =~ /elephant/
 puts "Better get lots of food"
 end
 ```
+
+## Review
+
+Let's quickly check that you know how to create and use regexps in Ruby.
+
+{{#quiz-choose-many}}
+What does the following code display?
+
+```ruby
+p /ant/ =~ "Elephant"
+```
+---
+- text: 5
+  accept: true
+  error: Remember, the offset starts at zero
+- text: 6
+  error: Remember to count from zero, not one
+- text: nil
+{{/quiz-choose-many}}
+
+{{#quiz-choose-many}}
+What does the following code display?
+
+```ruby
+p "Elephant" =~ /ant/
+```
+---
+- text: 5
+  accept: true
+- text: 6
+- text: nil
+{{/quiz-choose-many}}
+
+{{#quiz-choose-many}}
+What does the following code display?
+
+```ruby
+p /Elephant/ =~ "ant"
+```
+---
+- text: 5
+- text: 6
+- text: nil
+  accept: true
+{{/quiz-choose-many}}
+
+{{#quiz-input}}
+```python
+animal = "Bush kangaroo"
+if re.search(r'kangaroo', animal):
+  print "Skippy"
+else:
+  print "Boring"
+```
+---
+- text: What does the above code output?
+  accept: Skippy
+{{/quiz-input}}
