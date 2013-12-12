@@ -98,6 +98,50 @@ and try reapplying it at the current position. This is subtle nd powerful.
 It's also the source of many mistakes when writing patterns. We'll try to
 highlight when backtracking is important as we go along.
 
+## Now it's your turn
+
+(Note—some answers involve character classes, some don't)
+
+{{#quiz-choose-many}}
+
+Which of the following patterns will match the string `"artichoke"`?
+(Hint—there may be more than one correct answer.)
+
+---
+- text: >
+    `/t[aeiou]c`
+  accept: true
+- text: >
+    `/art/`
+  accept: true
+- text: >
+    `/ok[aei]`
+  accept: true
+- text: >
+    `/a[cat]t/`
+- text: >
+    `/[hic][kot]/`
+  accept: true
+- text: >
+    `/[abc][hij]`
+  accept: true
+- text: >
+    `/[cat][lmo]/`
+
+{{/quiz-choose-many}}
+
+
+{{#quiz-input}}
+Come up with regex that maches the following patterns:
+---
+- text: The letter x followed by a digit from 1 to 5
+  accept: /x[12345]/
+- text: A string containing `llama`.
+  accept: /llama/
+- text: The single character a, b, or c, followed by a colon (:) or a semicolon (;).
+  accept: /[abc][:;]/
+{{/quiz-input}}
+
 ## Matching Stuff Not in a Character Class
 
 Sometimes you need to invert the sense of a character class—you need a pattern
@@ -190,3 +234,32 @@ either am or pm.
     </p>
   </dd>
 </dl>
+
+## Let's Recap!
+
+{{#quiz-choose-many}}
+
+Which of the following patterns will match the string `"thx1138"`?
+
+(Hint — there may be more than one correct answer.)
+
+---
+- text: >
+    `/11/`
+  accept: true
+- text: >
+    `/1x/`
+- text: >
+    `/\w\d/`
+  accept: true
+- text: >
+    `/1[^x]/`
+- text: >
+    `/\w\W/`
+  accept: true
+- text: >
+    `/\d\w/`
+- text: >
+    `/[cat][lmo]/`
+
+{{/quiz-choose-many}}
