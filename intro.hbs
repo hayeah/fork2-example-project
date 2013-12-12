@@ -36,3 +36,48 @@ In the first case, the letters are there, but our pattern wanted them to be
 consecutive. In the second case, the string contains an uppercase D and our
 pattern looked for a lower case one. (We'll see later how to make pattern
 matches ignore the case of letters.)
+
+## A Quick Recap
+
+The key point to remember is that a regular expression is a   pattern that can
+be matched against one of more strings.
+
+{{#quiz-choose-many}}
+Which of the following patterns would match the string `"The quick brown fox"`?
+---
+- text: the
+  error: the pattern has lower-case 'the', and the string has 'The'
+- text: own
+  accept: true
+- text: fox!
+  error: there's no exclamation mark in the string
+- text: BROWN
+  error: "'brown' in the string is lower case"
+{{/quiz-choose-many}}
+
+{{#quiz-choose-many}}
+Which of the following strings would be matched by the pattern `the`. (Select
+all correct answers before pushing the done button.)
+
+---
+- text: The end of all things
+  error: Be careful about the case of the pattern and string
+- text: The end of the world
+  accept: true
+- text: Another answer
+  accept: true
+  error:  "'the' occurs in the middle of 'Another'"
+- text: And one more
+  error: "'brown' in the string is lower case"
+{{/quiz-choose-many}}
+
+{{#quiz-input}}
+Fill in the blanks
+---
+- text: A regular expression is a...
+  accept: pattern
+- text: A regular expression can be matched against one or more...
+  accept:
+    - string
+    - strings
+{{/quiz-input}}
