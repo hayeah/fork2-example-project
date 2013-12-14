@@ -1,5 +1,7 @@
 #  What is a Regexp?
 
+{{img "doggie-and-kittie.jpg" height="300"}}
+
 A regular expression (or *regexp*, or *regex*), is a pattern
 that can be matched against a string. In other words, the regular expression
 pattern specifies what we're looking for, and we can apply that pattern to one
@@ -7,9 +9,12 @@ or more strings to see if they contain that pattern.
 
 For example, we could create a regexp that matches any string that contains
 either "cat" or "dog". We could then apply that regexp to various strings. If
-we applied it to the string `"My cat"`, it would match (and we could
-probably find out that it matched at the 3rd character in the string, where
-characters are numbered starting at 0. {{footnote 1}}
+we applied it to the string `"My cat"`, it would match (and we could probably
+find out that it matched at the 3rd character in the string, where characters
+are numbered starting at 0. {{footnote 1}} We could apply the same regexp to
+the string `"catastrophic"` and get a match at position zero (because we
+didn't construct our regexp to look only for complete words when matching).
+{{footnote 2}}
 
 {{#footnote 1}}
 ```ruby
@@ -18,10 +23,6 @@ cat       # pattern
 012345    # character offset
 ```
 {{/footnote}}
-
-We could apply the same regexp to the string `"catastrophic"` and get a
-match at position zero (because we didn't construct our regexp to look only
-for complete words when matching). {{footnote 2}}
 
 {{#footnote 2}}
 ```ruby

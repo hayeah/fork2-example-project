@@ -109,11 +109,11 @@ matches is equivalent to `true`.
 farm = "otters, cats, ocelots, dogs, and wildebeast"
 
 if farm =~ /wild/
-puts "There's something wild in the farm"
+  puts "There's something wild in the farm"
 end
 
 if farm =~ /elephant/
-puts "Better get lots of food"
+  puts "Better get lots of food"
 end
 ```
 
@@ -128,7 +128,16 @@ What does the following code display?
 p /ant/ =~ "Elephant"
 ```
 ---
-- text: 5
+- text: |
+    ```ruby
+    p /ant/ =~ "Elephant"
+    ```
+
+    a line
+
+    another line
+
+    and a paragraph
   accept: true
   error: Remember, the offset starts at zero
 - text: 6
