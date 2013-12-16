@@ -1,5 +1,6 @@
 {
   "name": "regex",
+  "title": "Introduction to Regular Expression",
   "content": [
     "intro.hbs",
     "representing-regexp.hbs",
